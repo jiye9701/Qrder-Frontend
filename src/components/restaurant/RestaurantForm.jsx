@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addRestaurant } from '../../../features/restaurant/restaurantSlice';
+import { addRestaurant } from '../../features/restaurant/restaurantSlice';
 
 const RestaurantForm = () => {
     const dispatch = useDispatch();
@@ -15,7 +15,6 @@ const RestaurantForm = () => {
             ...form,
             [e.target.name]: e.target.value,
         });
-        console.log(e.target.name + " is " + e.target.value);
     };
 
     const handleSubmit = (e) => {

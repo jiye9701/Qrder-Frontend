@@ -163,7 +163,7 @@ export const restaurantSlice = createSlice({
             })
             .addCase(deleteRestaurant.fulfilled, (state, action) => {
                 state.restaurantList = state.restaurantList.filter(
-                    (restaurant) => restaurant._id !== action.payload.deletedRestaurant._id
+                    (restaurant) => restaurant._id !== action.payload._id
                 );
             })
             .addCase(deleteRestaurant.rejected, (state, action) => {

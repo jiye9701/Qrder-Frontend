@@ -10,7 +10,7 @@ import WaitStaff from "./components/WaitStaff";
 import QRScanner from "./components/QRScanner";
 import OrderSuccess from "./components/OrderSuccess";
 
-import GetRestaurants from "./components/Test/restaurant/GetRestaurants";
+import RestaurantsList from "./pages/restaurant/RestaurantsList";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -31,7 +31,7 @@ function App() {
         <Route path="/staff" element={<WaitStaff />} />
         <Route path="/selecttable" element={<TableSelection />} />
 
-        <Route path="/restaurants" element={<GetRestaurants />} />
+        <Route path="/restaurants" element={<RestaurantsList />} />
 
         {/* <Route path='/print' element={ <PrintData />} /> */}
       </Routes>

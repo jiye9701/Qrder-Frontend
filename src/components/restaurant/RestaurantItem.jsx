@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { getRestaurantById, deleteRestaurant } from '../../../features/restaurant/restaurantSlice';
+import { getRestaurantById, deleteRestaurant } from '../../features/restaurant/restaurantSlice';
 
 const RestaurantItem = (props) => {
     const navigate = useNavigate();

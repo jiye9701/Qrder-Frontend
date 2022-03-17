@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { updateRestaurant } from '../../../features/restaurant/restaurantSlice';
+import { updateRestaurant } from '../../features/restaurant/restaurantSlice';
 
 const EditResModal = (props) => {
     const dispatch = useDispatch();

@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { getRestaurants, reset, setRestaurantToUpdate } from "../../../features/restaurant/restaurantSlice";
+import { getRestaurants, reset, setRestaurantToUpdate } from "../../features/restaurant/restaurantSlice";
 
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 
-import RestaurantItem from './RestaurantItem';
-import RestaurantForm from './RestaurantForm';
-import EditModal from './EditModal';
+import RestaurantItem from '../../components/restaurant/RestaurantItem';
+import RestaurantForm from '../../components/restaurant/RestaurantForm';
+import EditModal from '../../components/restaurant/EditModal';
 
-const GetRestaurants = (props) => {
+const RestaurantsList = (props) => {
     const dispatch = useDispatch();
 
     const { restaurantList, restaurantToUpdate, systemMessage } = useSelector((state) => state.restaurants);
@@ -60,4 +60,4 @@ const GetRestaurants = (props) => {
     );
 }
 
-export default GetRestaurants;
+export default RestaurantsList;
