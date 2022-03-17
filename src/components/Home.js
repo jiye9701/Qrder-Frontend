@@ -12,7 +12,7 @@ const Home = () => {
         </NavLink>
       </div>
       &nbsp;
-      <img alt="Qrder Logo" className="logo" src={logoPNG} />
+      <img alt="Qrder Logo" className="logo-custom" src={logoPNG} />
       <h1 className="tagline-heading">Qrder</h1>
       <p className="tagline-paragraph">
         Qrder, pronounced as “Qorder” is a web application that provides digital
@@ -22,7 +22,7 @@ const Home = () => {
         Ready to order?
       </p>
       <div className="item-center">
-        <NavLink to="/scan" className="btn text-center">
+        <NavLink to="/scan" className="btn-custom text-center">
           {" "}
           Scan a QR Code{" "}
         </NavLink>

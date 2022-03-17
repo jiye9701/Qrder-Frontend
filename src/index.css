@@ -17,7 +17,7 @@ a {
   text-decoration: none;
 }
 
-.btn {
+.btn-custom {
   font: inherit;
   padding: 0.7rem 1.7rem;
   min-height: 40px;
@@ -45,14 +45,13 @@ a {
   min-height: 30px;
 }
 
-.card {
+/* .card {
   background-color: white;
   border-radius: 4px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   padding: 1rem;
-  /* width: 20rem; */
   margin-bottom: 1em;
-}
+} */
 
 .text-center {
   text-align: center;
@@ -87,7 +86,7 @@ a {
   text-align: right;
 }
 
-.modal {
+/* .modal {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   background-color: white;
@@ -98,7 +97,7 @@ a {
   position: fixed;
   top: 20vh;
   left: calc(50% - 15rem);
-}
+} */
 
 .backdrop {
   position: fixed;
@@ -120,7 +119,7 @@ a {
   color: black;
 }
 
-.logo {
+.logo-custom {
   min-width: 70px;
   width: 150px;
   margin-top: 3em;
