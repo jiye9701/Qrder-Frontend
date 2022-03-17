@@ -14,8 +14,8 @@ const Home = () => {
       &nbsp;
       <img alt="Qrder Logo" className="logo" src={logoPNG} />
       <h1 className="tagline-heading">Qrder</h1>
-      <p className="tagline-paragraph">
-        Qrder, pronounced as “Qorder” is a web application that provides digital
+           <p className="tagline-paragraph">
+        Qrder V 2.0, pronounced as “Qorder” is a web application that provides digital
         menus and online food ordering services to the local restaurants.
       </p>
       <p className="tagline-props" style={{ marginTop: "140px" }}>
@@ -28,7 +28,7 @@ const Home = () => {
         </NavLink>
       </div>
       <footer className="footer">
-        Copyright © 2021 Qrder. All rights reserved.
+        Copyright © 2022 Qrder. All rights reserved.
       </footer>
     </div>
   );
