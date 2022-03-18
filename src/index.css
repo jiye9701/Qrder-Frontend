@@ -9,6 +9,24 @@ body {
 
 }
 
+
+/* Horizontal scrolling */
+body_a {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px;
+}
+/* Sticky Positioning */
+th {
+  text-align: center;
+  border: 1px solid black;
+  background: #018ded;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+}
+
 h1,
 h2 {
   color: #333333;
