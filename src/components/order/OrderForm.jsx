@@ -1,42 +1,65 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { 
-    addToCart,
     clearCart,
     decreaseCart,
     getTotals,
-    removeFromCart
  } from '../../features/order/orderSlice';
  
-import Card from 'react-bootstrap/Card';
+import { addOrder } from '../../features/order/orderSlice';
 
-import CloseButton from 'react-bootstrap/CloseButton';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import CloseButton from 'react-bootstrap/CloseButton';
 
 const OrderForm = (props) => {
     const dispatch = useDispatch();
 
     const { orderItems, orderTotalQuantity, orderTotalAmount } = useSelector((state) => state.order);
+    const { currentRestaurant } = useSelector(
+        (state) => state.restaurants
+    )
     
     useEffect(() => {
         dispatch(getTotals());
     }, [ orderItems, orderTotalQuantity, orderTotalAmount, dispatch ]);
     
-    const handleAddToCart = (item) => {
-        dispatch(addToCart(item));
-    }
-
+    
     const handleDecreaseCart = (item) => {
         dispatch(decreaseCart(item));
     }
-
-    const handleRemoveFromCart = (item) => {
-        dispatch(removeFromCart(item));
-    }
-
+    
     const handleClearCart = () => {
         dispatch(clearCart());
     }
+    
+    const handleSubmitOrder = () => {
+
+        const menuItemsArray = []; 
+
+        // pick only _id (for pushing to order's 
+        // menuItems menuItem objectId reference)
+        // and quantity
+        orderItems.map(
+            ({ _id, quantity }) => menuItemsArray.push({ menuItem: _id, quantity })
+        );
+
+        const orderData = {
+            restaurantId: currentRestaurant._id,
+            data: {
+                // TODO: set tip feature later
+                tip: 0,
+                menuItems: menuItemsArray
+            },
+        }
+
+        console.log(orderData)
+        dispatch(addOrder(orderData));
+        dispatch(clearCart());
+    }
+
 
     return (
         <>
@@ -48,17 +71,32 @@ const OrderForm = (props) => {
                     </Card.Header>
                     <Card.Body>
                     <ListGroup>
-                        { orderItems && orderItems.map((item, i) => (
+                        { orderItems && 
+                            orderItems.length > 0 ? (orderItems.map((item, i) => (
                             <ListGroupItem key={item._id}>
-                                {item.name} {item.price} x {orderItems[i].quantity}
+                            <CloseButton onClick={() => handleDecreaseCart(item)}/> 
+                            {item.name} ${item.price} x {orderItems[i].quantity}  
                             </ListGroupItem>
-                        ))}
+                        ))) : (
+                            <div>
+                                No Items Yet
+                            </div>
+                        )}
                     </ListGroup>
                     
                     </Card.Body>
                     <Card.Footer>
-                        Total Cost: {orderTotalAmount}
-                        <Card.Link href='#' onClick={() => console.log(orderItems)}>Show object</Card.Link>
+                        <ListGroup>
+                            <ListGroupItem>
+                                Total Cost: ${orderTotalAmount}
+                            </ListGroupItem>
+                            <ListGroupItem>
+                                <Button onClick={handleSubmitOrder}>Submit Order</Button>
+                            </ListGroupItem>
+                            <ListGroupItem>
+                                <Button onClick={handleClearCart}>Clear Cart</Button>
+                            </ListGroupItem>
+                        </ListGroup>
                     </Card.Footer>
                 </Card>        
             </div>

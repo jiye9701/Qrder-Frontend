@@ -109,21 +109,14 @@ export const deleteRestaurant = createAsyncThunk(
     },
 );
 
-// set restaurant to update
-export const setRestaurantToUpdate = createAction(
-    'restaurants/setForUpdate',
-    function prepare(resToUpdate) {
-        return {
-            payload: resToUpdate
-        };
-    },
-);
-
 export const restaurantSlice = createSlice({
     name: 'restaurants',
     initialState,
     reducers: {
         reset: (state) => initialState,
+        setRestaurantToUpdate(state, action) {
+            state.restaurantToUpdate = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -165,12 +158,9 @@ export const restaurantSlice = createSlice({
             .addCase(deleteRestaurant.rejected, (state, action) => {
                 state.systemMessage = action.payload;
             })
-            .addCase(setRestaurantToUpdate, (state, action) => {
-                state.restaurantToUpdate = action.payload;
-            })
     }
 });
 
-export const { reset } = restaurantSlice.actions;
+export const { setRestaurantToUpdate, reset } = restaurantSlice.actions;
 export default restaurantSlice.reducer;
 

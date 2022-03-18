@@ -24,7 +24,7 @@ export const addOrder = createAsyncThunk(
     'orders/create',
     async (orderData, thunkAPI) => {
         try {
-            return await orderService.addOrder(orderData.form);
+            return await orderService.addOrder(orderData.restaurantId, orderData.data);
         } catch (error) {
             const message = 
             (error.response && 
@@ -159,14 +159,14 @@ export const orderSlice = createSlice({
             if (state.orderItems[itemIndex].quantity > 1) {
                 state.orderItems[itemIndex].quantity -= 1;
                 console.log(`${state.orderItems[itemIndex].name} item quantity decreased`);
-            } else if (state.orderItem[itemIndex].quantity === 1) {
+            } else if (state.orderItems[itemIndex].quantity === 1) {
                 const nextOrderItems = state.orderItems.filter(
                     (item) => item._id !== action.payload._id
                 );
 
                 state.orderItems = nextOrderItems;
 
-                console.log(`item ${state.orderItems[itemIndex].name} removed from order`);
+                console.log(`item removed from order`);
             }
 
             localStorage.setItem("orderItems", JSON.stringify(state.orderItems));

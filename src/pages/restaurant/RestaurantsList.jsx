@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { getRestaurants, reset, setRestaurantToUpdate } from "../../features/restaurant/restaurantSlice";
 
-import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 
 import RestaurantItem from '../../components/restaurant/RestaurantItem';
@@ -12,7 +11,7 @@ import EditModal from '../../components/restaurant/EditModal';
 const RestaurantsList = (props) => {
     const dispatch = useDispatch();
 
-    const { restaurantList, restaurantToUpdate, systemMessage } = useSelector((state) => state.restaurants);
+    const { restaurantList, systemMessage } = useSelector((state) => state.restaurants);
     
     useEffect(() => {
         dispatch(getRestaurants());
@@ -54,7 +53,6 @@ const RestaurantsList = (props) => {
         
         <EditModal 
           show={editModal}
-          onHide={() => setEditModal(false)}
           handleCallbackHide={handleCallbackHide}/>
 
       </>

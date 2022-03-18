@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getRestaurantById } from '../../features/restaurant/restaurantSlice';
 
 import OrderForm from '../../components/order/OrderForm';

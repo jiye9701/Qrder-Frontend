@@ -11,7 +11,6 @@ const addRestaurant = async (restaurantData) => {
 
 // GET: fetching/getting information on all restaurants
 const getRestaurants = async () => {
-    console.log(API_URL)
     const response = await axios.get(API_URL);
     
     return response.data;

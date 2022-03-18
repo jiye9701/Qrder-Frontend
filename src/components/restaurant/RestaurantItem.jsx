@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from 'react-bootstrap/Modal';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteRestaurant } from '../../features/restaurant/restaurantSlice';
+import { setRestaurantToUpdate } from '../../features/restaurant/restaurantSlice';
 
 import Card from 'react-bootstrap/Card';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { getRestaurantById, deleteRestaurant } from '../../features/restaurant/restaurantSlice';
+import Button from 'react-bootstrap/Button';
 
 const RestaurantItem = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    
     const handleEditRestaurant = () => {
         // send signal to parent to show Edit Restaurant modal
         // also send the id of the restaurant to eventually send to 
@@ -22,6 +22,11 @@ const RestaurantItem = (props) => {
         dispatch(deleteRestaurant(props.restaurant._id));
     }
 
+    const handleViewMenu = (restaurant) => {
+        dispatch(setRestaurantToUpdate(restaurant));
+        navigate(`/restaurants/${restaurant._id}`);
+    }
+    
     return(
         <>
             <div>
@@ -37,9 +42,11 @@ const RestaurantItem = (props) => {
                         </Card.Text>
                     </Card.Body>
                     <Card.Body>
-                        <ListGroupItem><Card.Link href='#' onClick={handleEditRestaurant}>Edit</Card.Link></ListGroupItem>
-                        <ListGroupItem><Card.Link href='#' onClick={handleDeleteRestaurant}>Delete</Card.Link></ListGroupItem>
-
+                        <ListGroup>
+                            <ListGroupItem><Button onClick={handleEditRestaurant}>Edit</Button></ListGroupItem>
+                            <ListGroupItem><Button onClick={handleDeleteRestaurant}>Delete</Button></ListGroupItem>
+                            <ListGroupItem><Button onClick={() => handleViewMenu(props.restaurant)}>View Menu</Button></ListGroupItem>
+                        </ListGroup>
                     </Card.Body>
                 </Card>        
             </div>

@@ -3,8 +3,8 @@ import axios from 'axios';
 const API_URL = '/api/orders/';
 
 // POST: add new order
-const addOrder = async (orderData) => {
-    const response = await axios.post(API_URL, orderData);
+const addOrder = async (resId, orderData) => {
+    const response = await axios.post(API_URL + resId, orderData);
 
     return response.data;
 }
