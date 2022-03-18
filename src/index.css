@@ -6,6 +6,7 @@ body {
   font-family: sans-serif;
   margin: 3rem;
   background-color: #fff8f2;
+
 }
 
 h1,
@@ -171,7 +172,7 @@ a {
 .select-tag {
   display: block;
   padding: 5px;
-  width: 30em;
+  width: 20em;
   height: 15em;
   margin-left: auto;
   margin-right: auto;
