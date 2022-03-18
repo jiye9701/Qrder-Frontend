@@ -13,6 +13,7 @@ import OrderSuccess from "./components/OrderSuccess";
 import RestaurantsList from "./pages/restaurant/RestaurantsList";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Restaurant from "./pages/restaurant/Restaurant";
 
 function App() {
   return (
@@ -31,7 +32,9 @@ function App() {
         <Route path="/staff" element={<WaitStaff />} />
         <Route path="/selecttable" element={<TableSelection />} />
 
-        <Route path="/restaurants" element={<RestaurantsList />} />
+        <Route exact path="/restaurants" element={<RestaurantsList />} />
+
+        <Route exact path="/restaurants/:restaurant_id" element={<Restaurant />} />
 
         {/* <Route path='/print' element={ <PrintData />} /> */}
       </Routes>

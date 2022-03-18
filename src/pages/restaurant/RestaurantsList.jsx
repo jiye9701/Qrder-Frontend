@@ -54,6 +54,7 @@ const RestaurantsList = (props) => {
         
         <EditModal 
           show={editModal}
+          onHide={() => setEditModal(false)}
           handleCallbackHide={handleCallbackHide}/>
 
       </>

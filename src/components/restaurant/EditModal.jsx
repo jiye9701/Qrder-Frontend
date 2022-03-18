@@ -52,11 +52,13 @@ const EditResModal = (props) => {
         <>
             <Modal
                 show={props.show}
+                onHide={handleCallbackHide}
                 size='lg'
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
 
-                <Modal.Header closeButton>
+                <Modal.Header 
+                    closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         Edit Restaurant
                     </Modal.Title>

@@ -13,7 +13,7 @@ const initialState = {
     systemMessage: '',
 }
 
-// 
+// add a new restaurant
 export const addRestaurant = createAsyncThunk(
     'restaurants/create',
     async (restaurantData, thunkAPI) => {
@@ -114,11 +114,7 @@ export const setRestaurantToUpdate = createAction(
     'restaurants/setForUpdate',
     function prepare(resToUpdate) {
         return {
-            payload: {
-                _id: resToUpdate._id,
-                name: resToUpdate.name,
-                isOpen: resToUpdate.isOpen,
-            }
+            payload: resToUpdate
         };
     },
 );

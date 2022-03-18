@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'restaurants/'
+const API_URL = '/api/restaurants/'
 
 // POST: creating/adding a new restaurant
 const addRestaurant = async (restaurantData) => {
@@ -11,6 +11,7 @@ const addRestaurant = async (restaurantData) => {
 
 // GET: fetching/getting information on all restaurants
 const getRestaurants = async () => {
+    console.log(API_URL)
     const response = await axios.get(API_URL);
     
     return response.data;
@@ -18,8 +19,9 @@ const getRestaurants = async () => {
 
 // GET: fetching/getting information on a restaurant by its id
 const getRestaurantById = async (resId) => {
+    console.log(API_URL + resId);
     const response = await axios.get(API_URL + resId);
-
+    
     return response.data;
 }
 
