@@ -15,6 +15,7 @@ import RestaurantsList from "./pages/restaurant/RestaurantsList";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Restaurant from "./pages/restaurant/Restaurant";
 import ListCustomers from "./components/customer/ListCustomers";
+import ShowCustomer from "./components/customer/ShowCustomer";
 
 function App() {
   return (

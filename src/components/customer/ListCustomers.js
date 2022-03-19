@@ -11,7 +11,7 @@ function ListCustomers(props) {
     const [data, setData] = useState([]);
     const [showLoading, setShowLoading] = useState(true);
     const [listError, setListError] = useState(false);
-    const apiUrl = "http://localhost:5000/api/customers";
+    const apiUrl = "/api/customers";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +19,7 @@ function ListCustomers(props) {
         .then(result => {
           console.log('result.data:', result.data)
           console.log('result.data.screen:', result.data.screen)
+          setData(result.data)
         });
     };
     fetchData();
@@ -30,21 +31,18 @@ function ListCustomers(props) {
 
   return (
     <div>
-      <img alt="Qrder Logo" className="logo" src={logoPNG} />
+      <img alt="Qrder Logo" className="logo-custom" src={logoPNG} />
 
       <div class="item-center">
-      { data.length !== 0
-        ? <div>
-          {showLoading && <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-          </Spinner>}
+      { data && data.length != 0 ? (
+          <div>
           <ListGroup>
-            {data.map((item, idx) => (
+            {data && data.map((item, idx) => (
                 <ListGroup.Item key={idx} action onClick={() => { showDetail(item._id) }}>{item.name} </ListGroup.Item>
             ))}
           </ListGroup>
         </div>
-        : <div><h3>No customers were found.</h3></div>
+        ) : ( <div><h3>No customers were found.</h3></div> )
       }
     </div>
 
