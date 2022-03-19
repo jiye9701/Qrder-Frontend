@@ -14,7 +14,7 @@ import RestaurantsList from "./pages/restaurant/RestaurantsList";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Restaurant from "./pages/restaurant/Restaurant";
-import ListCustomers from "./components/ListCustomers";
+import ListCustomers from "./components/customer/ListCustomers";
 
 function App() {
   return (

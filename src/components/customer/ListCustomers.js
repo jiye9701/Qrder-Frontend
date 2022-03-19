@@ -3,7 +3,7 @@ import axios from 'axios';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Spinner from 'react-bootstrap/Spinner';
 import { useNavigate } from 'react-router-dom';
-import logoPNG from "../images/qrder-logo.png";
+import logoPNG from "../../images/qrder-logo.png";
 
 function ListCustomers(props) {
     let navigate = useNavigate();
@@ -11,7 +11,7 @@ function ListCustomers(props) {
     const [data, setData] = useState([]);
     const [showLoading, setShowLoading] = useState(true);
     const [listError, setListError] = useState(false);
-    const apiUrl = "http://localhost:4000/api/customers";
+    const apiUrl = "http://localhost:5000/api/customers";
 
   useEffect(() => {
     const fetchData = async () => {

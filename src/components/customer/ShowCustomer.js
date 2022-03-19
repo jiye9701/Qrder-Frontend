@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
 import { useNavigate, useParams } from 'react-router-dom';
-import logoPNG from "../images/qrder-logo.png";
+import logoPNG from "../../images/qrder-logo.png";
 
 function ShowCustomer(props) {
 
@@ -11,7 +11,7 @@ function ShowCustomer(props) {
   const [data, setData] = useState({});
   const [showLoading, setShowLoading] = useState(true);
 
-  const apiUrl = "http://localhost:4000/api/customers/" + id;
+  const apiUrl = "http://localhost:5000/api/customers/" + id;
 
   useEffect(() => {
     setShowLoading(false);
