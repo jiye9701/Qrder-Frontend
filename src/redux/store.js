@@ -1,7 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
+// import { configureStore } from "@reduxjs/toolkit";
 
-import ordersReducer from "./reducer";
+// import ordersReducer from "./reducer";
 
-export default configureStore({
-  reducer: { ordersReducer },
-});
+// export default configureStore({
+//   reducer: { ordersReducer },
+// /});
