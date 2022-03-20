@@ -2,21 +2,38 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import orderService from './orderService';
 
 // orderList: list of ALL orders in the db 
+
 // order: store a single order for viewing its details
+
+// customerOrder: after the customer makes an order,
+// store the order here, if this state is not empty, 
+// the website will bug the customer with the rating page until they submit a 
+// rating for the service and the menu items, or click dismiss 
+// this is necessary because there is no authorization 
+
 // table: store table number
+// unused for now
+
 // systemMessage: store success/failure message
+
 // orderItems: items in the user's order
+
+// status: loading/completed
 
 const initialState = {
     orderList: [],
     order: {},
+    customerOrder: localStorage.getItem("customerOrder") ?
+        JSON.parse(localStorage.getItem("customerOrder")) :
+        {} ,
     table: 0,
-    orderItems: localStorage.getItem("orderItems") ?
+    orderItems:    localStorage.getItem("orderItems") ?
         JSON.parse(localStorage.getItem("orderItems")) :
         [] ,
     orderTotalQuantity: 0,
     orderTotalAmount: 0,
     systemMessage: '',
+    status: null,
 }
 
 // add a new order
@@ -24,7 +41,7 @@ export const addOrder = createAsyncThunk(
     'orders/create',
     async (orderData, thunkAPI) => {
         try {
-            return await orderService.addOrder(orderData.restaurantId, orderData.data);
+            return await orderService.addOrder(orderData.restaurant, orderData.data);
         } catch (error) {
             const message = 
             (error.response && 
@@ -212,15 +229,25 @@ export const orderSlice = createSlice({
         clearCart(state, action) {
             state.orderItems = [];
             localStorage.setItem("orderItems", JSON.stringify(state.orderItems));
-            console.log('order items cleared');
+        },
+        clearCustomerOrder(state, action) {
+            state.customerOrder = {};
+            localStorage.setItem("customerOrder", JSON.stringify(state.customerOrder));
         },
     },
     extraReducers: (builder) => {
         builder
+            .addCase(addOrder.pending, (state, action) => {
+                state.status = 'pending';
+            })
             .addCase(addOrder.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.customerOrder = action.payload;
+                localStorage.setItem("customerOrder", JSON.stringify(state.customerOrder));
                 state.orderList.push(action.payload);
             })
             .addCase(addOrder.rejected, (state, action) => {
+                state.status = 'rejected';
                 state.systemMessage = action.payload;
             })
             .addCase(getOrders.fulfilled, (state, action) => {
@@ -231,7 +258,7 @@ export const orderSlice = createSlice({
             })
             .addCase(getDayTip.fulfilled, (state, action) => {
                 state.dayTip = action.payload
-                // NOTE: look at returned object
+                // TODO: look at returned object
             })
             .addCase(getDayTip.rejected, (state, action) => {
                 state.systemMessage = action.payload;
@@ -263,5 +290,5 @@ export const orderSlice = createSlice({
     }
 })
 
-export const { addToCart, decreaseCart, removeFromCart, getTotals, clearCart } = orderSlice.actions;
+export const { addToCart, decreaseCart, removeFromCart, getTotals, clearCart, storeCustomerOrder, clearCustomerOrder } = orderSlice.actions;
 export default orderSlice.reducer;

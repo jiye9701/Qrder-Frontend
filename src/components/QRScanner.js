@@ -1,57 +1,77 @@
-import React, { Component } from "react";
-import Html5QrcodePlugin from "./Html5QrcodePlugin.jsx";
+import { useRef } from "react";
 import logoPNG from "../images/qrder-logo.png";
-import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import QrReader from 'react-qr-reader';
+import { Button, Col } from "react-bootstrap";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 const QRScanner = () => {
   const navigate = useNavigate();
-  const [decordedText, setText] = useState("");
+  const [qrData, setQrData] = useState('');
+  const qrRef = useRef(null);
 
   useEffect(() => {
-    // if (decordedText === "123qweasd") {
-    // Here we have to go to a specific restaurant based on its ID
-    // navigate("/product");
-    //navigate(`/product/${decordedText}`);
-    // }
-  }, []);
+    if (!!qrData) {
+      navigate(qrData);
+    }
+  }, [ qrData ]);
 
-  const onNewScanResult = (decordedText, decodedResult) => {
-    console.log("App [result]", decodedResult.decordedText);
-    console.log("Decoded Text is", decordedText);
-    navigate(`/tables/${decordedText}`);
+  
+  const handleScanQrButton = () => {
+    qrRef.current.openImageDialog();
+  } 
 
-    //setText(decordedText);
+  const handleScan= (result) => {
+    if(result) {
+      setQrData(result);
+    }
+  }
 
-    // let decodedResults = this.state.decodedResults;
-    // decodedResults.push(decodedResult);
-    // this.setState((state, props) => {
-    //   state.decodedResults.push(decodedResult);
-    //   // navigate("/home");
-    //   return state;
-    // });
-  };
+  const handleScanError = (error) => {
+    console.log(error);
+  }
 
   return (
     <div className="App">
-      <img alt="Qrder Logo" className="logo" src={logoPNG} />
+      <img alt="Qrder Logo" className="logo-custom" src={logoPNG} />
       &nbsp;&nbsp;
-      <section className="App-section">
-        <Html5QrcodePlugin
-          fps={10}
-          qrbox={250}
-          disableFlip={false}
-          qrCodeSuccessCallback={onNewScanResult}
-        />
-      </section>
-      &nbsp;
-      <div className="item-center">
-        <NavLink to="/product" className="btn text-center">
-          {" "}
-          View Menu{" "}
-        </NavLink>
-      </div>
+
+      
+      <Container>
+      <Row style={{ padding: '1em' }}>
+        <Col/>
+        <Col xs='auto' md='auto' ls='auto'>
+          Scan the Restaurant's QR Code to Begin Ordering!
+        </Col>
+        <Col/>
+      </Row>
+      <Row style={{ 'padding-left': '20em', 'padding-right': '20em' }} >
+            <QrReader
+              delay={300}
+              style={{width: '100%'}}
+              onError={handleScanError}
+              onScan={handleScan} />
+
+      </Row>
+      <Row style={{ padding: '5em'}}>
+      <Col />
+      <Col xs='auto' md='auto' ls='auto' >
+        <Button onClick={handleScanQrButton}>Scan From Image File</Button>
+      </Col>
+      <Col />
+      </Row>
+      <Row>
+        <QrReader
+          id='fileScanner'
+          ref={qrRef}
+          delay={300}
+          style={{display: 'none'}}
+          onError={handleScanError}
+          onScan={handleScan}
+          legacyMode />
+      </Row>
+      </Container>
     </div>
   );
 };

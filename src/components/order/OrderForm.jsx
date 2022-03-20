@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { 
@@ -13,18 +14,20 @@ import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import CloseButton from 'react-bootstrap/CloseButton';
+import { Spinner } from 'react-bootstrap';
 
 const OrderForm = (props) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const { orderItems, orderTotalQuantity, orderTotalAmount } = useSelector((state) => state.order);
+    const { orderItems, orderTotalAmount, status } = useSelector((state) => state.order);
     const { currentRestaurant } = useSelector(
         (state) => state.restaurants
     )
     
     useEffect(() => {
         dispatch(getTotals());
-    }, [ orderItems, orderTotalQuantity, orderTotalAmount, dispatch ]);
+    }, [ orderItems, dispatch ]);
     
     
     const handleDecreaseCart = (item) => {
@@ -47,18 +50,18 @@ const OrderForm = (props) => {
         );
 
         const orderData = {
-            restaurantId: currentRestaurant._id,
+            restaurant: currentRestaurant._id,
             data: {
-                // TODO: set tip feature later
                 tip: 0,
-                menuItems: menuItemsArray
+                totalCost: orderTotalAmount,
+                menuItems: menuItemsArray,
             },
         }
-
-        console.log(orderData)
-        dispatch(addOrder(orderData));
-        dispatch(clearCart());
-    }
+        dispatch(addOrder(orderData)).then(() =>{
+            dispatch(clearCart());
+            navigate('/order-success');
+        });
+    };
 
 
     return (
@@ -91,7 +94,19 @@ const OrderForm = (props) => {
                                 Total Cost: ${orderTotalAmount}
                             </ListGroupItem>
                             <ListGroupItem>
-                                <Button onClick={handleSubmitOrder}>Submit Order</Button>
+                                <Button onClick={handleSubmitOrder}>
+                                { status === 'pending' && (
+                                    <>
+                                    <Spinner
+                                        as="span"
+                                        animation="border"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                        />
+                                    </>
+                                )}
+                                    Submit Order</Button>
                             </ListGroupItem>
                             <ListGroupItem>
                                 <Button onClick={handleClearCart}>Clear Cart</Button>

@@ -8,12 +8,12 @@ import OrderItem from "./components/OrderItem";
 import TableSelection from "./components/TableSelection";
 import WaitStaff from "./components/WaitStaff";
 import QRScanner from "./components/QRScanner";
-import OrderSuccess from "./components/OrderSuccess";
-
+import OrderSuccess from "./components/order/OrderSuccess";
+import Restaurant from "./pages/restaurant/Restaurant";
 import RestaurantsList from "./pages/restaurant/RestaurantsList";
 
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Restaurant from "./pages/restaurant/Restaurant";
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
         <Route path="/tables/:id" element={<Tables />} />
         <Route path="/product/:id/:tableId" element={<Product />} />
         <Route path="/cart" element={<CartItem />} />
-        <Route path="/success" element={<OrderSuccess />} />
+        {/* <Route path="/success" element={<OrderSuccess />} /> */}
 
         <Route path="/pay/:id" element={<OrderItem />} />
 
@@ -35,6 +35,8 @@ function App() {
         <Route exact path="/restaurants" element={<RestaurantsList />} />
 
         <Route exact path="/restaurants/:restaurant_id" element={<Restaurant />} />
+
+        <Route exact path="/order-success" element={<OrderSuccess />} />
 
         {/* <Route path='/print' element={ <PrintData />} /> */}
       </Routes>
