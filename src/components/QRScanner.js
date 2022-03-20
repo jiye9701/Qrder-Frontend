@@ -4,10 +4,12 @@ import logoPNG from "../images/qrder-logo.png";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { QrReader } from 'react-qr-reader';
 
 const QRScanner = () => {
   const navigate = useNavigate();
   const [decordedText, setText] = useState("");
+  const [qrData, setQrData] = useState('');
 
   useEffect(() => {
     // if (decordedText === "123qweasd") {
@@ -15,7 +17,10 @@ const QRScanner = () => {
     // navigate("/product");
     //navigate(`/product/${decordedText}`);
     // }
-  }, []);
+    if (!!qrData) {
+      navigate(qrData);
+    }
+  }, [ qrData ]);
 
   const onNewScanResult = (decordedText, decodedResult) => {
     console.log("App [result]", decodedResult.decordedText);
@@ -38,12 +43,21 @@ const QRScanner = () => {
       <img alt="Qrder Logo" className="logo" src={logoPNG} />
       &nbsp;&nbsp;
       <section className="App-section">
-        <Html5QrcodePlugin
+        {/* <Html5QrcodePlugin
           fps={10}
           qrbox={250}
           disableFlip={false}
           qrCodeSuccessCallback={onNewScanResult}
-        />
+        /> */}
+        <QrReader
+          onResult={(result, error) => {
+            if(!!result) {
+              setQrData(result?.text);
+            }
+            
+          }}
+          style={{ width: '50%' }}
+          />
       </section>
       &nbsp;
       <div className="item-center">
