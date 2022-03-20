@@ -18,7 +18,6 @@ const getRestaurants = async () => {
 
 // GET: fetching/getting information on a restaurant by its id
 const getRestaurantById = async (resId) => {
-    console.log(API_URL + resId);
     const response = await axios.get(API_URL + resId);
     
     return response.data;
