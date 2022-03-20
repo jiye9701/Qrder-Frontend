@@ -4,7 +4,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Spinner from 'react-bootstrap/Spinner';
 import { useNavigate } from 'react-router-dom';
 import logoPNG from "../../images/qrder-logo.png";
-
+//
 function ListCustomers(props) {
     let navigate = useNavigate();
     
