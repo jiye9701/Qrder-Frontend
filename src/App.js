@@ -9,7 +9,6 @@ import TableSelection from "./components/TableSelection";
 import WaitStaff from "./components/WaitStaff";
 import QRScanner from "./components/QRScanner";
 import OrderSuccess from "./components/order/OrderSuccess";
-import Restaurant from "./pages/restaurant/Restaurant";
 import RestaurantsList from "./pages/restaurant/RestaurantsList";
 
 
