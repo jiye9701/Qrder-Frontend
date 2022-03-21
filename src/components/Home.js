@@ -10,6 +10,10 @@ const Home = () => {
         <NavLink to="/staff" className="restaurant-btn">
           Restaurant Staff
         </NavLink>
+
+        <NavLink to="/customers" className="restaurant-btn">
+          Customer List
+        </NavLink>
       </div>
       &nbsp;
       <img alt="Qrder Logo" className="logo-custom" src={logoPNG} />

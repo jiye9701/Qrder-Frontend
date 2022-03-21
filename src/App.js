@@ -14,6 +14,9 @@ import RestaurantsList from "./pages/restaurant/RestaurantsList";
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Restaurant from "./pages/restaurant/Restaurant";
+import ListCustomers from "./components/customer/ListCustomers";
+import ShowCustomer from "./components/customer/ShowCustomer";
 
 function App() {
   return (
@@ -36,6 +39,9 @@ function App() {
 
         <Route exact path="/restaurants/:restaurant_id" element={<Restaurant />} />
 
+
+        <Route path="/customers" element={<ListCustomers />} />
+        <Route path="/customers/:customer_id" element={<ShowCustomer />} />
         <Route exact path="/order-success" element={<OrderSuccess />} />
 
         {/* <Route path='/print' element={ <PrintData />} /> */}
