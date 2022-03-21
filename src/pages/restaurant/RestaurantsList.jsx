@@ -15,10 +15,6 @@ const RestaurantsList = (props) => {
     
     useEffect(() => {
         dispatch(getRestaurants());
-
-        return () => {
-            dispatch(reset());
-        }
     }, [ systemMessage ]);
 
     // modal show/hide state
