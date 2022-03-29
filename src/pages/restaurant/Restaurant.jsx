@@ -13,26 +13,34 @@ const Restaurant = () => {
     const { currentRestaurant, systemMessage } = useSelector((state) => state.restaurants);
     
     useEffect(() => {
-        if (!currentRestaurant) {
-            console.log('no res found');
-        }
         
-        dispatch(getRestaurantById(params.restaurant_id));
 
+        dispatch(getRestaurantById(params.restaurant_id));
+        
     }, [ systemMessage ]);
     
     return(
         <>
-            <OrderForm />
-
-            <div>
-                { currentRestaurant.menuItems && currentRestaurant.menuItems.map((menuItem) => (
-                    <MenuItem
-                        key={menuItem._id}
-                        menuItem={menuItem}/>
-                    
-                ))}
-            </div>
+            { !currentRestaurant || !currentRestaurant.menuItems ? (
+                <div>
+                    <h1>
+                        Invalid Restaurant
+                    </h1>
+                </div>
+            ) : (
+                <>
+                <OrderForm />
+                <div>
+                    { currentRestaurant.menuItems && currentRestaurant.menuItems.map((menuItem) => (
+                        <MenuItem
+                            key={menuItem._id}
+                            menuItem={menuItem}/>
+                        
+                    ))}
+                </div>
+                </>
+            )}
+            
         </>
     );
 };
