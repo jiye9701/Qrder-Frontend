@@ -1,16 +1,20 @@
 import { createSlice, createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import restaurantService from './restaurantService';
+import itemRatingService from '../itemRating/itemRatingService';
 
 // restaurantList: an array of all restaurant objects
 // currentRestaurant: stores the single restaurant object that the user is currently 
 // ordering food from, according to the restaurant model, this restaurant object will include
 // an array of all its menu items (menuItems)
-// systemMessage: server response message 
+// message: server response message 
 const initialState = {
     restaurantList: [],
     currentRestaurant: {},
     restaurantToUpdate: {},
-    systemMessage: '',
+    isLoading: false,
+    isError: false,
+    isSuccess: false,
+    message: '',
 }
 
 // add a new restaurant
@@ -109,6 +113,24 @@ export const deleteRestaurant = createAsyncThunk(
     },
 );
 
+export const getAllItemRatings = createAsyncThunk(
+    'itemRating/getAll',
+    async (resId, thunkAPI) => {
+        try {
+            return await itemRatingService.getAllItemRatings(resId);
+        } catch (error) {
+            const message = 
+            (error.response && 
+                error.response.data &&
+                error.response.data.message) || 
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        };
+    }
+);
+
 export const restaurantSlice = createSlice({
     name: 'restaurants',
     initialState,
@@ -124,19 +146,21 @@ export const restaurantSlice = createSlice({
                 state.restaurantList.push(action.payload);
             })
             .addCase(addRestaurant.rejected, (state, action) => {
-                state.systemMessage = action.payload;
+                state.message = action.payload;
             })
             .addCase(getRestaurants.fulfilled, (state, action) => {
                 state.restaurantList = action.payload;
             })
             .addCase(getRestaurants.rejected, (state, action) => {
-                state.systemMessage = action.payload;
+                state.message = action.payload;
             })
             .addCase(getRestaurantById.fulfilled, (state, action) => {
+                state.isSuccess = true;
                 state.currentRestaurant = action.payload;
             })
             .addCase(getRestaurantById.rejected, (state, action) => {
-                state.systemMessage = action.payload;
+                state.isError = true;
+                state.message = action.payload;
             })
             .addCase(updateRestaurant.fulfilled, (state, action) => {
                 const updatedRestaurant = action.payload;
@@ -148,7 +172,7 @@ export const restaurantSlice = createSlice({
                     res )
             })
             .addCase(updateRestaurant.rejected, (state, action) => {
-                state.systemMessage = action.payload;
+                state.message = action.payload;
             })
             .addCase(deleteRestaurant.fulfilled, (state, action) => {
                 state.restaurantList = state.restaurantList.filter(
@@ -156,7 +180,48 @@ export const restaurantSlice = createSlice({
                 );
             })
             .addCase(deleteRestaurant.rejected, (state, action) => {
-                state.systemMessage = action.payload;
+                state.message = action.payload;
+            })
+            .addCase(getAllItemRatings.fulfilled, (state, action) => {
+                const allRatings = action.payload;
+                const itemRatings = [];
+                allRatings.map((item) => {
+                    itemRatings.push({
+                        menuItem: item.menuItem,
+                        rating: item.rating,
+                    })
+                });
+
+                console.log('item ratings counts: ', itemRatings.length)
+                
+                let groupedItemRatings = [];
+
+                itemRatings.map((item) => {
+                    const existingIndex = groupedItemRatings.findIndex(
+                        (arrayItem) => arrayItem.menuItem === item.menuItem
+                    );
+                    console.log('existing index', existingIndex)
+                    if (existingIndex >= 0) {
+                        groupedItemRatings[existingIndex].totalRating += item.rating;
+                        groupedItemRatings[existingIndex].rateCount += 1;
+                        console.log('item increased')
+                    } else {
+                        let tempItem = {
+                            menuItem: item.menuItem,
+                            rateCount: 1,
+                            totalRating: item.rating,
+                        }
+
+                        groupedItemRatings.push(tempItem);
+                        console.log('item added to array')
+                    }
+                    
+                    // console.log("all items: ", allItems);
+                    console.log("item: ", item)
+                })
+                console.log(groupedItemRatings)
+                
+                // console.log(itemRatings);
             })
     }
 });

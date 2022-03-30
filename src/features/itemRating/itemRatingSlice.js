@@ -5,6 +5,7 @@ const initialState = {
     itemRatings: localStorage.getItem("itemRatings") ? 
         JSON.parse(localStorage.getItem("itemRatings")) :
         {},
+    isLoading: false,
     isSuccess: false,
     isError: false,    
     message: "",
@@ -47,7 +48,7 @@ export const getAllItemRatings = createAsyncThunk(
 );
 
 export const getItemRatings = createAsyncThunk(
-    'itemRating/getItemRating',
+    'itemRating/getItemRatings',
     async (data, thunkAPI) => {
         try {
             return await itemRatingService.getItemRatings(data.resId, data.itemId);
@@ -103,11 +104,16 @@ export const itemRatingSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(getAllItemRatings.pending, (state) => {
+                state.isLoading = true;
+            })
             .addCase(getAllItemRatings.fulfilled, (state, action) => {
-                state.itemRatings = action.payload;
+                state.isLoading = false;
+                state.allItemRatings = action.payload;
                 state.isSuccess = true;
             })
             .addCase(getAllItemRatings.rejected, (state, action) => {
+                state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
             })
