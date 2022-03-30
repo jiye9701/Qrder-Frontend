@@ -27,11 +27,11 @@ const Restaurant = () => {
      
         dispatch(getRestaurantById(params.restaurant_id)).then(() => {
             console.log('restaurant info fetched');
+            dispatch(getAllItemRatings(params.restaurant_id)).then(() => {
+                console.log('restaurant menu ratings fetched');
+            })
         })
-        dispatch(getAllItemRatings(params.restaurant_id)).then(() => {
-            console.log('restaurant menu ratings fetched');
-        })
-        
+
     }, []);
     
     

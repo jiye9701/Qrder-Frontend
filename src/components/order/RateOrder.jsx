@@ -86,6 +86,7 @@ const RateOrder = () => {
                         <StarRatings
                         name={item.menuItem}
                         changeRating={handleChangeRating}
+                        starRatedColor="red"
                         numberOfStars={10}
                         rating={item.rating}
                         starDimension="20px"

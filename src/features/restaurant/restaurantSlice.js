@@ -191,8 +191,6 @@ export const restaurantSlice = createSlice({
                         rating: item.rating,
                     })
                 });
-
-                console.log('item ratings counts: ', itemRatings.length)
                 
                 let groupedItemRatings = [];
 
@@ -200,11 +198,9 @@ export const restaurantSlice = createSlice({
                     const existingIndex = groupedItemRatings.findIndex(
                         (arrayItem) => arrayItem.menuItem === item.menuItem
                     );
-                    console.log('existing index', existingIndex)
                     if (existingIndex >= 0) {
                         groupedItemRatings[existingIndex].totalRating += item.rating;
                         groupedItemRatings[existingIndex].rateCount += 1;
-                        console.log('item increased')
                     } else {
                         let tempItem = {
                             menuItem: item.menuItem,
@@ -213,15 +209,21 @@ export const restaurantSlice = createSlice({
                         }
 
                         groupedItemRatings.push(tempItem);
-                        console.log('item added to array')
                     }
-                    
-                    // console.log("all items: ", allItems);
-                    console.log("item: ", item)
                 })
-                console.log(groupedItemRatings)
                 
-                // console.log(itemRatings);
+                groupedItemRatings.map((groupedItem) => {
+                    const existingIndex = state.currentRestaurant.menuItems.findIndex((menuItem) => 
+                        menuItem._id === groupedItem.menuItem
+                    );
+
+                    if (existingIndex >= 0) {
+                        const averageRating = groupedItem.totalRating / groupedItem.rateCount;
+                        
+                        state.currentRestaurant.menuItems[existingIndex].averageRating = averageRating;
+                    } 
+                })
+                
             })
     }
 });

@@ -29,7 +29,8 @@ const MenuItem = (props) => {
                             Average Rating:
                             <StarRatings
                             numberOfStars={10}
-                            rating={5}
+                            starRatedColor="red"
+                            rating={props.menuItem.averageRating}
                             starDimension="15px"
                             starSpacing="1px" />
 
