@@ -5,6 +5,7 @@ import {
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import StarRatings from 'react-star-ratings';
 
 const MenuItem = (props) => {
     const dispatch = useDispatch();
@@ -25,7 +26,17 @@ const MenuItem = (props) => {
                     </Card.Header>
                     <Card.Body>
                         <Card.Text>
-                            {props.menuItem.price}
+                            Average Rating:
+                            <StarRatings
+                            numberOfStars={10}
+                            starRatedColor="red"
+                            rating={props.menuItem.averageRating}
+                            starDimension="15px"
+                            starSpacing="1px" />
+
+                        </Card.Text>
+                        <Card.Text>
+                            Price ${props.menuItem.price}
                         </Card.Text>
                     </Card.Body>
                     <Card.Body>

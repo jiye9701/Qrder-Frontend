@@ -46,7 +46,7 @@ const QRScanner = () => {
         </Col>
         <Col/>
       </Row>
-      <Row style={{ 'padding-left': '20em', 'padding-right': '20em' }} >
+      <Row >
             <QrReader
               delay={300}
               style={{width: '100%'}}

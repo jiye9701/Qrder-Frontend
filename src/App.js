@@ -16,6 +16,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Restaurant from "./pages/restaurant/Restaurant";
 import ListCustomers from "./components/customer/ListCustomers";
 import ShowCustomer from "./components/customer/ShowCustomer";
+import RateOrder from "./components/order/RateOrder";
 
 function App() {
   return (
@@ -42,6 +43,8 @@ function App() {
         <Route path="/customers" element={<ListCustomers />} />
         <Route path="/customers/:customer_id" element={<ShowCustomer />} />
         <Route exact path="/order-success" element={<OrderSuccess />} />
+
+        <Route exact path="/rate-order" element={<RateOrder />} />
 
         {/* <Route path='/print' element={ <PrintData />} /> */}
       </Routes>
