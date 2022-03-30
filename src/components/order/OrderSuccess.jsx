@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { clearCustomerOrder, updateOrder } from "../../features/order/orderSlice";
+import { updateOrder, clearCustomerOrder } from "../../features/order/orderSlice";
+import { setItemsForRating } from '../../features/itemRating/itemRatingSlice';
+
 
 import Card from 'react-bootstrap/Card';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
@@ -15,6 +17,14 @@ const OrderSuccess = () => {
     const { customerOrder } = useSelector(
         (state) => state.order
     );
+
+    const { currentRestaurant } = useSelector(
+        (state) => state.restaurants    
+    )
+
+    const { itemRatings } = useSelector(
+        (state) => state.itemRating
+    )
 
     const [ updatedOrder, setUpdatedOrder ] = useState({
         _id: customerOrder._id,
@@ -38,8 +48,9 @@ const OrderSuccess = () => {
     
     const handleSubmitTip = () => {
         dispatch(updateOrder(updatedOrder));
+        dispatch(setItemsForRating(customerOrder));
         dispatch(clearCustomerOrder());
-        navigate('/');
+        navigate('/rate-order');
     };
 
     return (
