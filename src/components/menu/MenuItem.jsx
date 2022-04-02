@@ -40,7 +40,7 @@ const MenuItem = (props) => {
                         </Card.Text>
                     </Card.Body>
                     <Card.Body>
-                        <Button onClick={() => handleAddToBasket(props.menuItem)}>Add To Card</Button>                        
+                        <Button onClick={() => handleAddToBasket(props.menuItem)}>Add To Cart</Button>                        
                     </Card.Body>
                 </Card>        
             </div>
