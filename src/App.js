@@ -17,6 +17,7 @@ import Restaurant from "./pages/restaurant/Restaurant";
 import ListCustomers from "./components/customer/ListCustomers";
 import ShowCustomer from "./components/customer/ShowCustomer";
 import RateOrder from "./components/order/RateOrder";
+import ShowOrder from "./components/order/ShowOrder";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/scan" element={<QRScanner />} />
+        <Route render={() => <ShowOrder />} path="/show/:id" />
 
         <Route path="/tables/:id" element={<Tables />} />
         <Route path="/product/:id/:tableId" element={<Product />} />
@@ -45,6 +47,8 @@ function App() {
         <Route exact path="/order-success" element={<OrderSuccess />} />
 
         <Route exact path="/rate-order" element={<RateOrder />} />
+
+        <Route path="/showOrder" element={<ShowOrder />} />
 
         {/* <Route path='/print' element={ <PrintData />} /> */}
       </Routes>

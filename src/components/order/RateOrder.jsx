@@ -57,6 +57,8 @@ const RateOrder = () => {
         dispatch(clearItemsForRating());
         navigate('/');
     }
+
+ 
     
     useEffect(() => {
         if(itemRatings.length == null || itemRatings.length == 0) {
@@ -99,6 +101,7 @@ const RateOrder = () => {
             <Button onClick={handleSubmitRating}>Submit Rating</Button>
             or 
             <Button onClick={handleSkipRating}>Skip Rating</Button>
+            
         </>
     );
 }
