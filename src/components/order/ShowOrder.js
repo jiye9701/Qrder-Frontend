@@ -4,25 +4,19 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Spinner from "react-bootstrap/Spinner";
 //import { withRouter } from "react-router-dom";
 //import { getAllOrder } from "../Controller/api";
-const orderUrl =
-"http://comp231qrderapi-dev.us-east-2.elasticbeanstalk.com/api/restaurant/50a96701adb6482088eb97342ea4bd8b/order";
-
-export const getAllOrder1 = async () => {
-  return await axios.get(`${orderUrl}`);
-};
-
+const apiUrl =
+"/api/orders";
 
 function List(props) {
   const [data, setData] = useState([]);
   const [showLoading, setShowLoading] = useState(true);
-  const apiUrl = getAllOrder1;
+  const fetchData = async () => {
+    const result = await axios(apiUrl);
+    setData(result.data);
+    setShowLoading(false);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(apiUrl);
-      setData(result.data);
-      setShowLoading(false);
-    };
 
     fetchData();
   }, []);
