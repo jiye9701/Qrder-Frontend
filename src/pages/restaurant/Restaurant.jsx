@@ -8,7 +8,7 @@ import {
 
 import OrderForm from '../../components/order/OrderForm';
 import MenuItem from '../../components/menu/MenuItem';
-import PopularMenuItems from '../../components/popularMenuItems/PopularMenuItems';
+import PopularMenuItems from './popularMenuItems/PopularMenuItems';
 import { Spinner, Button } from 'react-bootstrap';
 
 const Restaurant = () => {
@@ -46,7 +46,7 @@ const Restaurant = () => {
       ) : (
         <>
           <OrderForm />
-          <PopularMenuItems />
+          <PopularMenuItems restaurant={currentRestaurant} />
           <div>
             {currentRestaurant.menuItems &&
               currentRestaurant.menuItems.map((menuItem) => (

@@ -1,0 +1,17 @@
+.popular-items{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 5px;
+    gap: 120px;
+    font-style: italic;
+    font-family: 'Abel';font-size: 22px;
+
+
+}
+
+.page-title{
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+}
