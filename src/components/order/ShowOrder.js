@@ -32,27 +32,25 @@ function List(props) {
     if (
       !array.find(
         order =>
-          order.tip === item.tip 
-         /* order.orderName === item.orderName &&
-          order.section === item.section &&
-          order.semester === item.semester*/
+        /*  order.totalCost === item.totalCost &&
+         order.date === item.date &&
+          order.tip === item.tip &&*/
+          order.tip === 0
       )
-    ) {
+    ) 
+    {
       array.push(item);
       return item;
     }
   });
-
-  const displayAllorderTable = array.map((order, idx) => {
+  let aq=0;
+  const displayAllorderTable = array.map((order) => {
     return (
-      <tr
-        key={idx}
-        onClick={() => {
-          showDetail(order.order_id);
-        }}
-      >
+      <tr>
+        <td>{order.date}</td>
+        <td>{order.totalCost}</td>
         <td>{order.tip}</td>
-       
+        <td>{aq= order.tip+aq}</td>
       </tr>
     );
   });
@@ -78,7 +76,7 @@ function List(props) {
           <table class="table table-primary">
             <thead class="thead-dark">
               <tr>
-                <th>order Code</th>
+                <th>Order Date</th>
                 <th>Total Cost</th>
                 <th>Amount of Tip</th>
                 <th>Total Amount of Tip</th>
