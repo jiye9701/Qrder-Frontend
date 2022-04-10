@@ -32,10 +32,7 @@ function List(props) {
     if (
       !array.find(
         order =>
-        /*  order.totalCost === item.totalCost &&
-         order.date === item.date &&
-          order.tip === item.tip &&*/
-          order.tip === 0
+              order.tip === item.tip
       )
     ) 
     {
