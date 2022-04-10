@@ -60,7 +60,7 @@ function List(props) {
     <div className="container">
       <div className="col-12 div-style">
         
-        <h2 className="h2-style">List Of orders</h2>
+        <h2 className="h2-style">List Of Orders</h2>
         {showLoading && (
           <Spinner animation="border" role="status">
             <span className="sr-only">Loading...</span>
@@ -70,7 +70,7 @@ function List(props) {
           orders for {data.firstName} {data.lastName}
         </h3> */}
         <div class="col-12 item-center paddings div-style">
-          <h5>Click on order to see order details.</h5>
+          <h5></h5>
           </div>
           <div class="col-12 item-center paddings div-style">
           <table class="table table-primary">
