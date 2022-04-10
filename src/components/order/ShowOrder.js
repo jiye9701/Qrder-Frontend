@@ -21,27 +21,8 @@ function List(props) {
     fetchData();
   }, []);
 
-  const showDetail = id => {
-    props.history.push({
-      pathname: "/show/" + id
-    });
-  };
-
-  let array = [];
-  data.map(item => {
-    if (
-      !array.find(
-        order =>
-              order.tip === item.tip
-      )
-    ) 
-    {
-      array.push(item);
-      return item;
-    }
-  });
   let aq=0;
-  const displayAllorderTable = array.map((order) => {
+  const displayAllorderTable = data.map((order) => {
     return (
       <tr>
         <td>{order.date}</td>
@@ -63,9 +44,6 @@ function List(props) {
             <span className="sr-only">Loading...</span>
           </Spinner>
         )}
-        {/* <h3>
-          orders for {data.firstName} {data.lastName}
-        </h3> */}
         <div class="col-12 item-center paddings div-style">
           <h5></h5>
           </div>
