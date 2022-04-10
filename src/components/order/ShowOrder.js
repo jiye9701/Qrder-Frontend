@@ -17,7 +17,6 @@ function List(props) {
   };
 
   useEffect(() => {
-
     fetchData();
   }, []);
 
@@ -25,7 +24,7 @@ function List(props) {
   const displayAllorderTable = data.map((order) => {
     return (
       <tr>
-        <td>{order.date}</td>
+        <td>{order.date.substring(0, 10) } </td>
         <td>{order.totalCost}</td>
         <td>{order.tip}</td>
         <td>{aq= order.tip+aq}</td>
