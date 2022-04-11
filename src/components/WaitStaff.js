@@ -3,9 +3,14 @@ import { NavLink } from "react-router-dom";
 import logoPNG from "../images/qrder-logo.png";
 import StaffCell from "./StaffCell";
 import { getAllOrder } from "../Controller/api";
+import { Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const WaitStaff = ({ restaurantName }) => {
   const [tables, setTables] = useState([]);
+  const dispatch = useDispatch();
+    const navigate = useNavigate();
 
   useEffect(() => {
     getTables();
@@ -17,6 +22,11 @@ const WaitStaff = ({ restaurantName }) => {
     console.log("response data", response.data);
     setTables(response.data);
   };
+  const h1 = () => {
+    
+    navigate('/showOrder');
+}
+
 
   return (
     <div>
@@ -42,7 +52,13 @@ const WaitStaff = ({ restaurantName }) => {
           {" "}
           Start a new order{" "}
         </NavLink>
+
+        
       </div>
+      <div className="item-center">
+        <Button className="m-3 col-3" onClick={h1}>See All Orders</Button>
+      </div>
+      
     </div>
   );
 };
