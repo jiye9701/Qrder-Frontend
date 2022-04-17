@@ -1,7 +1,10 @@
 import axios from 'axios';
 
-const API_URL = '/api/restaurants/'
+const API_URL = '/api/restaurants/';
+const MENU_API_URL = '/api/menu-items';
 
+// restaurant controllers
+//
 // POST: creating/adding a new restaurant
 const addRestaurant = async (restaurantData) => {
     const response = await axios.post(API_URL, restaurantData);
@@ -37,12 +40,39 @@ const deleteRestaurant = async (resId) => {
     return response.data;
 }
 
+// restaurant's menu items controllers
+//
+
+// POST: add new menu item to restaurant
+const addItem = async (itemData) => {
+    const response = await axios.post(MENU_API_URL, itemData);
+
+    return response.data;
+}
+
+// PUT: update the menu item
+const updateItem = async (id, updatedItem) => {
+    const response = await axios.put(MENU_API_URL + id, updatedItem);
+
+    return response.data;
+} 
+
+// DEL: delete/remove menu item
+const deleteItem = async (id) => {
+    const response = await axios.delete(MENU_API_URL + id);
+
+    return response.data;
+}
+
 const restaurantService = {
     addRestaurant,
     getRestaurants,
     getRestaurantById,
     updateRestaurant,
     deleteRestaurant,
+    addItem,
+    updateItem,
+    deleteItem
 }
 
 export default restaurantService;
