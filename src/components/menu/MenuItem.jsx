@@ -6,6 +6,7 @@ import {
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import StarRatings from 'react-star-ratings';
+import { deleteItem } from '../../features/restaurant/restaurantSlice';
 
 const MenuItem = (props) => {
     const dispatch = useDispatch();
@@ -25,6 +26,14 @@ const MenuItem = (props) => {
     const handleAddToBasket = (item) => {
         dispatch(addToCart(item));
     };
+
+    // delete function omitted since 
+    // deleting a menu item causes the 
+    // popular menu items to fail 
+    //
+    // const handleDeleteItem = (id) => {
+    //     dispatch(deleteItem(id));
+    // }
 
     return (
         <>
@@ -55,7 +64,10 @@ const MenuItem = (props) => {
                         </Card.Text>
                     </Card.Body>
                     {props.dash ? (
-                        <Button onClick={() => handleEditCallback(props.menuItem)}>Edit</Button>
+                        <>
+                            <Button onClick={() => handleEditCallback(props.menuItem)}>Edit</Button>
+                            {/* <Button onClick={() => handleDeleteItem(props.menuItem._id)}>Delete</Button> */}
+                        </>
                     ) : (
                         <Card.Body>
                             <Button onClick={() => handleAddToBasket(props.menuItem)}>Add To Cart</Button>                        
