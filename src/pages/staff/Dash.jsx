@@ -22,11 +22,19 @@ const Dash = () => {
 
   const [editModalBool, setEditModalBool] = useState(false);
   const [itemToEdit, setItemToEdit] = useState({});
+  const [createModeBool, setCreateModeBool] = useState(false);
 
   const editModalCallBack = (show, itemData) => {
     setEditModalBool(show);
     setItemToEdit(itemData);
+    setCreateModeBool(false);
   };
+
+  const createModalCallBack = () => {
+    setEditModalBool(true);
+    setItemToEdit({});
+    setCreateModeBool(true);    
+  }
 
   const handleCallbackHide = (hide) => {
     setEditModalBool(hide);
@@ -48,11 +56,14 @@ const Dash = () => {
     <>
       <EditModal
         show={editModalBool}
+        createMode={createModeBool}
         handleCallbackHide={handleCallbackHide}
         menuItem={itemToEdit}
       />
 
       <Button onClick={() => navigate(-1)}>Back</Button>
+
+      <Button onClick={() => createModalCallBack()}>Add Item</Button>
 
       <Card border='info' style={{ width: '18rem' }}>
         <Card.Header>
