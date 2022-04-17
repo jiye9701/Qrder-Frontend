@@ -1,6 +1,7 @@
 import { createSlice, createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import restaurantService from './restaurantService';
 import itemRatingService from '../itemRating/itemRatingService';
+import menuService from '../menu/menuService';
 
 // restaurantList: an array of all restaurant objects
 // currentRestaurant: stores the single restaurant object that the user is currently 
@@ -17,6 +18,8 @@ const initialState = {
     message: '',
 }
 
+// restaurant controls
+//
 // add a new restaurant
 export const addRestaurant = createAsyncThunk(
     'restaurants/create',
@@ -131,6 +134,63 @@ export const getAllItemRatings = createAsyncThunk(
     }
 );
 
+// menu item controlls
+//
+// add new menu item
+export const addItem = createAsyncThunk(
+    'menu/create',
+    async (itemData, thunkAPI) => {
+        try {
+            return await menuService.addItem(itemData.form);
+        } catch (error) {
+            const message = 
+            (error.response && 
+                error.response.data &&
+                error.response.data.message) || 
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        };
+    },
+);
+
+export const updateItem = createAsyncThunk(
+    'menu/update',
+    async (updatedItem, thunkAPI) => {
+        try {
+            return await menuService.updateItem(updatedItem._id, updatedItem);
+        } catch (error) {
+            const message = 
+            (error.response && 
+                error.response.data &&
+                error.response.data.message) || 
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        };
+    },
+);
+
+export const deleteItem = createAsyncThunk(
+    'menu/delete',
+    async (id, thunkAPI) => {
+        try {
+            return await menuService.deleteItem(id);
+        } catch (error) {
+            const message = 
+            (error.response && 
+                error.response.data &&
+                error.response.data.message) || 
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        };
+    },
+);
+
 export const restaurantSlice = createSlice({
     name: 'restaurants',
     initialState,
@@ -225,6 +285,9 @@ export const restaurantSlice = createSlice({
                 })
                 
             })
+            // .addCase(addItem.fulfilled, (state, action) => {
+            //     state.currentRestaurant.menuItems
+            // })
     }
 });
 

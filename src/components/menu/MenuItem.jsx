@@ -10,6 +10,18 @@ import StarRatings from 'react-star-ratings';
 const MenuItem = (props) => {
     const dispatch = useDispatch();
 
+    if(props.dash) {
+        console.log('staff dash');
+    };
+
+    // staff dash view
+    //
+    // send data to parent
+    const handleEditCallback = (itemData) => {
+        props.editModalCallback(true, itemData);
+    };
+
+    // customer view
     const handleAddToBasket = (item) => {
         dispatch(addToCart(item));
     };
@@ -36,12 +48,19 @@ const MenuItem = (props) => {
 
                         </Card.Text>
                         <Card.Text>
+                            {props.menuItem.description}
+                        </Card.Text>
+                        <Card.Text>
                             Price ${props.menuItem.price}
                         </Card.Text>
                     </Card.Body>
-                    <Card.Body>
-                        <Button onClick={() => handleAddToBasket(props.menuItem)}>Add To Cart</Button>                        
-                    </Card.Body>
+                    {props.dash ? (
+                        <Button onClick={() => handleEditCallback(props.menuItem)}>Edit</Button>
+                    ) : (
+                        <Card.Body>
+                            <Button onClick={() => handleAddToBasket(props.menuItem)}>Add To Cart</Button>                        
+                        </Card.Body>
+                    )}
                 </Card>        
             </div>
 

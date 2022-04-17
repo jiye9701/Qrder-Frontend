@@ -18,6 +18,7 @@ import ListCustomers from "./components/customer/ListCustomers";
 import ShowCustomer from "./components/customer/ShowCustomer";
 import RateOrder from "./components/order/RateOrder";
 import ShowOrder from "./components/order/ShowOrder";
+import Dash from "./pages/staff/Dash";
 
 function App() {
   return (
@@ -48,7 +49,12 @@ function App() {
 
         <Route exact path="/rate-order" element={<RateOrder />} />
 
+        <Route exact path='/staffDash/:restaurant_id' element={
+          <Dash />
+        } />
+
         <Route path="/showOrder" element={<ShowOrder />} />
+        
 
         {/* <Route path='/print' element={ <PrintData />} /> */}
       </Routes>
