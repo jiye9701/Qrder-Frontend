@@ -2,6 +2,7 @@ import { createSlice, createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import restaurantService from './restaurantService';
 import itemRatingService from '../itemRating/itemRatingService';
 import menuService from '../menu/menuService';
+import orderService from '../order/orderService';
 
 // restaurantList: an array of all restaurant objects
 // currentRestaurant: stores the single restaurant object that the user is currently 
@@ -191,6 +192,24 @@ export const deleteItem = createAsyncThunk(
     },
 );
 
+export const getDayTotalSale = createAsyncThunk(
+    'orders/dayTotalSale',
+    async (resId, thunkAPI) => {
+        try {
+            return await orderService.getDayTotalSale(resId);
+        } catch (error) {
+            const message = 
+            (error.response && 
+                error.response.data &&
+                error.response.data.message) || 
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        };
+    },
+);
+
 export const restaurantSlice = createSlice({
     name: 'restaurants',
     initialState,
@@ -314,6 +333,13 @@ export const restaurantSlice = createSlice({
                 state.currentRestaurant.menuItems = state.currentRestaurant.menuItems.filter(
                     (item) => item._id !== deletedItemId
                 );
+            })
+            .addCase(getDayTotalSale.fulfilled, (state, action) => {
+                const { totalDaySale } = action.payload;
+                state.currentRestaurant.dayTotalSale = totalDaySale;
+            })
+            .addCase(getDayTotalSale.rejected, (state, action) => {
+                state.systemMessage = action.payload;
             })
 
     }

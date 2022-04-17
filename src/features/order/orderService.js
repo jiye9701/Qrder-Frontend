@@ -24,12 +24,27 @@ const getDayTip = async (resId) => {
   return response.data;
 };
 
+// GET: get the total sales for the past 24hrs for restaurant
+// (tip not included)
+const getDayTotalSale = async (resId) => {
+  const response = await axios.get(API_URL + 'daytotal/' + resId);
+
+  return response.data;
+}
+
 // GET: get order by id
 const getOrderById = async (id) => {
   const response = await axios.get(API_URL + id);
 
   return response.data;
 };
+
+// GET: get list of orders by restaurant id
+const getOrdersByResId = async (id) => {
+  const response = await axios.get(API_URL + id);
+
+  return response.data;
+}
 
 // PUT: update order
 const updateOrder = async (id, updatedOrder) => {
@@ -49,7 +64,9 @@ const orderService = {
   addOrder,
   getOrders,
   getDayTip,
+  getDayTotalSale,
   getOrderById,
+  getOrdersByResId,
   updateOrder,
   deleteOrder,
 };

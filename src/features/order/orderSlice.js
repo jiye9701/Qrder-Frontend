@@ -32,6 +32,7 @@ const initialState = {
         [] ,
     orderTotalQuantity: 0,
     orderTotalAmount: 0,
+    dayTotalSale: 0,
     systemMessage: '',
     status: null,
 }
@@ -91,11 +92,47 @@ export const getDayTip = createAsyncThunk(
     },
 );
 
+export const getDayTotalSale = createAsyncThunk(
+    'orders/dayTotalSale',
+    async (resId, thunkAPI) => {
+        try {
+            return await orderService.getDayTotalSale(resId);
+        } catch (error) {
+            const message = 
+            (error.response && 
+                error.response.data &&
+                error.response.data.message) || 
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        };
+    },
+);
+
 export const getOrderById = createAsyncThunk(
     'orders/one',
     async (id, thunkAPI) => {
         try {
             return await orderService.getOrderById(id);
+        } catch (error) {
+            const message = 
+            (error.response && 
+                error.response.data &&
+                error.response.data.message) || 
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        };
+    },
+);
+
+export const getOrdersByResId = createAsyncThunk(
+    'orders/res',
+    async (id, thunkAPI) => {
+        try {
+            return await orderService.getOrdersByResId(id);
         } catch (error) {
             const message = 
             (error.response && 
@@ -263,10 +300,22 @@ export const orderSlice = createSlice({
             .addCase(getDayTip.rejected, (state, action) => {
                 state.systemMessage = action.payload;
             })
+            .addCase(getDayTotalSale.fulfilled, (state, action) => {
+                state.dayTotalSale = action.payload;
+            })
+            .addCase(getDayTotalSale.rejected, (state, action) => {
+                state.systemMessage = action.payload;
+            })
             .addCase(getOrderById.fulfilled, (state, action) => {
                 state.order = action.payload;
             })
             .addCase(getOrderById.rejected, (state, action) => {
+                state.systemMessage = action.payload;
+            })
+            .addCase(getOrdersByResId.fulfilled, (state, action) => {
+                state.orderList = action.payload;
+            })
+            .addCase(getOrdersByResId.rejected, (state, action) => {
                 state.systemMessage = action.payload;
             })
             .addCase(updateOrder.fulfilled, (state, action) => {
