@@ -64,11 +64,11 @@ const Dash = () => {
         <Card.Header>Sales</Card.Header>
         <Card.Body>
           <Card.Title>{currentRestaurant.name} 24hrs Sales</Card.Title>
-          { !currentRestaurant.dayTotalSale ? (
+          { !currentRestaurant.totalDaySale ? (
             <Spinner animation="border" />
           ) : (
             <Card.Text>
-                ${currentRestaurant.dayTotalSale}
+                ${currentRestaurant.totalDaySale}
             </Card.Text>
           )}
         </Card.Body>

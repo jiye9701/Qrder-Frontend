@@ -336,7 +336,8 @@ export const restaurantSlice = createSlice({
             })
             .addCase(getDayTotalSale.fulfilled, (state, action) => {
                 const { totalDaySale } = action.payload;
-                state.currentRestaurant.dayTotalSale = totalDaySale;
+                const roundedTotal = (Math.round(totalDaySale * 100)/ 100).toFixed(2);
+                state.currentRestaurant.totalDaySale = roundedTotal;
             })
             .addCase(getDayTotalSale.rejected, (state, action) => {
                 state.systemMessage = action.payload;
