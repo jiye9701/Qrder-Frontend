@@ -144,7 +144,7 @@ export const addItem = createAsyncThunk(
   'menu/create',
   async (itemData, thunkAPI) => {
     try {
-      return await menuService.addItem(itemData.form);
+      return await menuService.addItem(itemData);
     } catch (error) {
       const message =
         (error.response &&
@@ -339,9 +339,12 @@ export const restaurantSlice = createSlice({
         });
       })
       // add menu item
-      // .addCase(addItem.fulfilled, (state, action) => {
-      //     state.currentRestaurant.menuItems
-      // })
+      .addCase(addItem.fulfilled, (state, action) => {
+          state.currentRestaurant.menuItems.push(action.payload);
+      })
+      .addCase(addItem.rejected, (state, action) => {
+          state.systemMessage = action.payload;
+      })
       // edit menu item
       .addCase(updateItem.fulfilled, (state, action) => {
         const updatedItem = action.payload;

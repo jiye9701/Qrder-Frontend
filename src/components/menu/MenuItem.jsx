@@ -11,10 +11,6 @@ import { deleteItem } from '../../features/restaurant/restaurantSlice';
 const MenuItem = (props) => {
     const dispatch = useDispatch();
 
-    if(props.dash) {
-        console.log('staff dash');
-    };
-
     // staff dash view
     //
     // send data to parent

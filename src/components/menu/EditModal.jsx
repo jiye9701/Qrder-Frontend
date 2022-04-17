@@ -1,23 +1,28 @@
 import Modal from 'react-bootstrap/Modal';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { updateItem } from '../../features/restaurant/restaurantSlice';
+import { 
+  updateItem,
+  addItem,
+} from '../../features/restaurant/restaurantSlice';
 
 const EditModal = (props) => {
   const dispatch = useDispatch();
+  const params = useParams();
 
-  const [updatedItem, setUpdatedItem] = useState({
+  const [itemData, setItemData] = useState({
     _id: '',
-    restaurant: '',
+    restaurant: params.restaurant_id,
     name: '',
     price: 0.0,
     description: '',
   });
 
   const handleCallbackHide = (e) => {
-    setUpdatedItem({
+    setItemData({
       _id: '',
       restaurant: '',
       name: '',
@@ -29,30 +34,45 @@ const EditModal = (props) => {
   };
 
   const handleChange = (e) => {
-    setUpdatedItem({
-      ...updatedItem,
+    setItemData({
+      ...itemData,
       [e.target.name]: e.target.value,
     });
   };
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    console.log('menu item updated');
-    dispatch(updateItem(updatedItem));
+    // if create mode then dispatch addItem
+    // if not create mode then dispatch updateItem
+    if (!!props.createMode) {
+      dispatch(addItem(itemData));
+    } else {
+      dispatch(updateItem(itemData));
+    }
 
     handleCallbackHide();
   }
 
   useEffect(() => {
-    setUpdatedItem({
-      _id: props.menuItem._id,
-      restaurant: props.menuItem.restaurant,
-      name: props.menuItem.name,
-      price: props.menuItem.price,
-      description: props.menuItem.description ? props.menuItem.description : 'null',
-    })
+    // if create mode is false 
+    // then set default values from props
+    if(props.createMode) {
+      setItemData({
+        restaurant: params.restaurant_id,
+        name: '',
+        price: 0,
+        description: '',
+      });
+    } else {
+      setItemData({
+        _id: props.menuItem._id,
+        restaurant: props.menuItem.restaurant,
+        name: props.menuItem.name,
+        price: props.menuItem.price,
+        description: props.menuItem.description ? props.menuItem.description : '',
+      })
+    }
 
-    console.log(updatedItem);
   }, [props.show]);
 
   return (
@@ -66,9 +86,15 @@ const EditModal = (props) => {
 
           <Modal.Header 
               closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">
+              {!!props.createMode ? (
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Create Menu Item
+                </Modal.Title>
+              ) : ( 
+                <Modal.Title id="contained-modal-title-vcenter">
                   Edit Menu Item
-              </Modal.Title>
+                </Modal.Title>
+              )}
           </Modal.Header>
 
           <Modal.Body>
@@ -99,7 +125,9 @@ const EditModal = (props) => {
                   
                   <Form.Control 
                       name='description'
-                      type='text' 
+                      type='text'
+                      as='textarea'
+                      rows={3}
                       defaultValue={props.menuItem.description}
                       onChange={handleChange}/>
 
@@ -109,7 +137,15 @@ const EditModal = (props) => {
           
           <Modal.Footer>
               <Button onClick={handleCallbackHide}>Close</Button>
-              <Button onClick={handleUpdateSubmit}>Update</Button>
+              {!!props.createMode ? (
+                <Button onClick={handleUpdateSubmit}>
+                  Add Item
+                </Button>
+              ) : (
+                <Button onClick={handleUpdateSubmit}>
+                  Update
+                </Button>
+              )}
           </Modal.Footer>
       </Modal>
     </>
