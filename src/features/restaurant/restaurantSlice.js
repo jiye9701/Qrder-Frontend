@@ -285,9 +285,37 @@ export const restaurantSlice = createSlice({
                 })
                 
             })
+            // add menu item
             // .addCase(addItem.fulfilled, (state, action) => {
             //     state.currentRestaurant.menuItems
             // })
+            // edit menu item
+            .addCase(updateItem.fulfilled, (state, action) => {
+                const updatedItem = action.payload;
+                // const menu = state.currentRestaurant.menuItems;
+
+                // console.log(updatedItem);
+                // console.log(menu[0]);
+                state.currentRestaurant.menuItems = state.currentRestaurant.menuItems.map(
+                    (item) => item._id === updatedItem._id ? { 
+                        ...item, 
+                        name: updatedItem.name, 
+                        price: updatedItem.price,
+                        description: updatedItem.description,
+                    } : item
+                );
+            })
+            .addCase(updateItem.rejected, (state, action) => {
+                state.message = action.payload;
+            })
+            .addCase(deleteItem.fulfilled, (state, action) => {
+                const deletedItemId = action.payload._id;
+                
+                state.currentRestaurant.menuItems = state.currentRestaurant.menuItems.filter(
+                    (item) => item._id !== deletedItemId
+                );
+            })
+
     }
 });
 
