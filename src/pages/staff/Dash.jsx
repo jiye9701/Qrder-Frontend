@@ -5,11 +5,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   getRestaurantById,
   getAllItemRatings,
+  getDayTotalSale,
 } from '../../features/restaurant/restaurantSlice';
 
 import MenuItem from '../../components/menu/MenuItem';
 import { Button } from "react-bootstrap";
 import EditModal from "../../components/menu/EditModal";
+import Spinner from 'react-bootstrap/Spinner';
+import Card from 'react-bootstrap/Card';
 
 const Dash = () => {
   const dispatch = useDispatch();
@@ -41,6 +44,9 @@ const Dash = () => {
       dispatch(getAllItemRatings(params.restaurant_id)).then(() => {
         console.log('res ratings loaded');
       });
+      dispatch(getDayTotalSale(params.restaurant_id)).then(() => {
+        console.log('total sale calculated');
+      });
     });
 
   }, []);
@@ -53,6 +59,20 @@ const Dash = () => {
       menuItem={itemToEdit} />
 
     <Button onClick={() => navigate(-1)}>Back</Button>
+
+      <Card border="info" style={{ width: '18rem' }}>
+        <Card.Header>Sales</Card.Header>
+        <Card.Body>
+          <Card.Title>{currentRestaurant.name} 24hrs Sales</Card.Title>
+          { !currentRestaurant.totalDaySale ? (
+            <Spinner animation="border" />
+          ) : (
+            <Card.Text>
+                ${currentRestaurant.totalDaySale}
+            </Card.Text>
+          )}
+        </Card.Body>
+      </Card>
       {!currentRestaurant || !currentRestaurant.menuItems ? (
         <div>
           <h1>Invalid Restaurant</h1>

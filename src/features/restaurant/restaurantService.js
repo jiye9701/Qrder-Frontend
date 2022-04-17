@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const API_URL = '/api/restaurants/';
 const MENU_API_URL = '/api/menu-items';
+const ORDER_API_URL = '/api/orders/'
 
 // restaurant controllers
 //
@@ -64,6 +65,16 @@ const deleteItem = async (id) => {
     return response.data;
 }
 
+// restaurant orders
+//
+// GET: get the total sales for the past 24hrs for restaurant
+// (tip not included)
+const getDayTotalSale = async (resId) => {
+    const response = await axios.get(ORDER_API_URL + 'daytotal/' + resId);
+  
+    return response.data;
+}
+
 const restaurantService = {
     addRestaurant,
     getRestaurants,
@@ -72,7 +83,8 @@ const restaurantService = {
     deleteRestaurant,
     addItem,
     updateItem,
-    deleteItem
+    deleteItem,
+    getDayTotalSale,
 }
 
 export default restaurantService;
