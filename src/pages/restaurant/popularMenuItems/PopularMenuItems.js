@@ -29,7 +29,7 @@ const PopularMenuItems = (props) => {
       </Card.Header>
       <Card.Body>
         <div className='popular-items'>
-          {popularMenuItems.length > 1 ? (
+          {popularMenuItems.length > 0 ? (
             popularMenuItems.map(function (menuItem, index = 1) {
               return <h3>{menuItem.data.name}</h3>;
             })
@@ -72,9 +72,10 @@ const getMostPopularItems = (mapOfMenuItems) => {
   var counter = 0;
   var arrayOfPopularItemNames = [];
   while (counter != 3) {
-    if (currentMenuItem) {
+    let item = currentMenuItem.next();
+    if (!!item.value) {
       arrayOfPopularItemNames.push(
-        getMenuItemName(currentMenuItem.next().value[0])
+        getMenuItemName(item.value[0])
       );
     }
     counter++;
